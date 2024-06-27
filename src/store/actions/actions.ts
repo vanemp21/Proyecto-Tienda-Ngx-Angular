@@ -16,4 +16,4 @@ export const addPlant = createAction(
     '[Plant List] Remove By Id',
     props<{ id: number }>() 
   );
-  export const removeAll = createAction('[Plant List] Remove All')
+  export const PayCart = createAction('[Plant List] Pay Cart List')

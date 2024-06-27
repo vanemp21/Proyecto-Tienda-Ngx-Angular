@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import { PlantInterface } from '../../app/shared/models/product.model';
-import { addPlant, removeAll, removeById, removePlant } from '../actions/actions';
+import { PayCart, addPlant, removeById, removePlant } from '../actions/actions';
 
 export const initialState: PlantInterface[] = [];
 const _plantReducer = createReducer(
@@ -34,7 +34,7 @@ const _plantReducer = createReducer(
   on(removeById, (state, { id }) => {
     return state.filter(plant => plant.id !== id);
   }),
-  on(removeAll, (state) => {
+  on(PayCart, (state) => {
     return [];
   })
 );

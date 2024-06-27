@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import {
   addPlant,
-  removeAll,
+  PayCart,
   removeById,
   removePlant,
 } from '../../../store/actions/actions';
@@ -64,7 +64,7 @@ totalByPlant: { [id: number]: number } = {};
 
   }
   onPayPlants(){
-    this.store.dispatch(removeAll())
+    this.store.dispatch(PayCart())
     this.toastr.success('¡Productos comprados correctamente!', 'Productos Pagados');
   }
   closeCart() {
