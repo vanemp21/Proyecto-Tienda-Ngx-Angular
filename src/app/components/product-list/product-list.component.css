@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Contenedor principal de productos */
+.grid-products {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  margin-top: 60px;
+}
+/* Tarjetas individuales de plantas */
+.plant-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(197, 177, 198, 0.472);
+  max-height: 300px;
+  border-radius: 20px;
+  padding: 170px 0;
+  border: 1px dotted rgb(100, 98, 98);
+  transition: transform 0.3s ease-in-out;
+}
+
+.plant-card:hover {
+  transform: scale(1.2);
+}
+/* Estilo para imágenes */
+.grid-products img {
+  width: 150px;
+  height: auto;
+  max-height: 160px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 11px 5px rgb(167, 135, 161);
+  opacity: 100%;
+}
+
+
+
+/* Estilos para botones */
+button {
+  background-color: rgb(175, 144, 166);
+  box-shadow: 5px 5px 11px 5px rgb(86, 86, 86);
+  border-color: black;
+}
+button:active{
+  background-color: rgb(164, 111, 140) !important;
+  border:1px solid black !important;
+}
+button:hover {
+  background-color: rgb(211, 141, 191);
+  border-color: black;
+}
+
+/* Estilos para los párrafos */
+p {
+  margin-bottom: 10px;
+}
+
+/* Encabezado de las tarjetas */
+h3 {
+  margin-top: 10px;
+}
+
+/* Estilos para el span dentro del párrafo */
+p span {
+  font-weight: bold;
+}
+
+/* Media query para pantallas más anchas */
+@media screen and (min-width: 768px) {
+  .grid-products {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+  }
+
+ 
+}

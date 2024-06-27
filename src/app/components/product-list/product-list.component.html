@@ -1,0 +1,16 @@
+<div class="grid-products">
+  <div *ngFor="let plant of plants" class="plant-card">
+    <img
+      [src]="'assets/images/' + plant.image"
+      alt="{{ plant.name }}"
+      class="plant-image"
+    />
+    <h3>{{ plant.name }}</h3>
+    <p><span>Precio:</span> {{ plant.price }}€</p>
+    <div>
+      <button (click)="addPlant(plant)" class="btn btn-primary">
+        Agregar Planta
+      </button>
+    </div>
+  </div>
+</div>

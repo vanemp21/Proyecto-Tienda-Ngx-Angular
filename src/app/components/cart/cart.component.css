@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+.cart-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100px;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+}
+.cart-items {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 5px 0;
+  margin-bottom: 20px;
+}
+.first-line-item {
+  display: flex;
+  padding-left: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+button:active{
+  background-color: rgb(164, 111, 140) !important;
+}
+.button-counter span {
+  margin-right: 5px;
+}
+.item-name,
+.total-item {
+  font-weight: bold;
+}
+.total-item {
+  margin-right: 5px;
+}
+.remove-all {
+  display: flex;
+  align-items: center;
+  
+}
+.name-price-item{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+}
+.item-price{
+  margin-right: 5px;
+}
+.cart-empty {
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.cart-no-empty {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.pay-button,
+.close-button,
+.remove-item,
+.decrement-item,
+.increment-item {
+  background-color: rgb(126, 36, 85);
+  border-radius: 3px;
+  border: 1px solid black;
+}
+.button-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.close-button {
+  color: rgb(244, 230, 241);
+  width: 35px;
+  height: 5px;
+  flex: 1 1;
+}
+.close-button:first-child {
+  align-self: flex-end;
+}
+.remove-item,
+.decrement-item,
+.increment-item {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 10px;
+}
+.remove-item span,
+.decrement-item span,
+.increment-item span {
+  font-size: 10px;
+}
+

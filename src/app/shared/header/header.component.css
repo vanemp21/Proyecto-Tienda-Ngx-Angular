@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+ES+Deco:wght@100..400&display=swap");
+
+.header {
+  display: flex;
+  justify-content: center;
+  padding: 20px 20px 30px 20px;
+  margin-bottom: 30px;
+  font-family: "Playwrite ES Deco", cursive;
+  font-optical-sizing: auto;
+margin-top:40px;
+}
+
+.header img {
+  width: 10%;
+}
+
+.header h1 {
+  margin: 0 20px;
+}
+.header-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header-icons {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
+ position: absolute;
+ top:0;
+ right: 10px;
+}
+.floating-element {
+  animation: float 4s ease-in-out infinite;
+}
+.header-components {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(165, 131, 153, 0.507);
+  box-shadow: 5px 5px 11px 1px rgb(86, 86, 86);
+  padding: 10px 0;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.bi-cart,
+.bi-person-fill {
+  font-size: 36px;
+  cursor: pointer;
+  color: rgb(126, 36, 85);
+}
+ .cart-component{
+    background-color: rgb(238, 212, 228);
+    width: 270px;
+    position: absolute;
+    top:20px;
+    right:90px;
+    z-index: 999;
+    border:1px solid rgb(166, 162, 162);
+    border-radius: 5px;
+ }
+
+  /* Estilo para el contenido del carrito */
+ 
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@media screen and (min-width:768px) {
+  .cart-component{
+    width: 300px;
+  }
+}

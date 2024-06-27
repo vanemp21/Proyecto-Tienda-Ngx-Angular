@@ -1,0 +1,70 @@
+  [
+    {
+      "id": 1,
+      "name": "Cactus",
+      "price": 20,
+      "image": "cactus.PNG" 
+    },
+    {
+      "id": 2,
+      "name": "Sansevieria",
+      "price": 30,
+      "image": "sansevieria.PNG" 
+    },
+    {
+      "id": 3,
+      "name": "Cactus",
+      "price": 22,
+      "image": "cactus.PNG" 
+    },
+    {
+      "id": 4,
+      "name": "Syngonium",
+      "price": 25,
+      "image": "syngonium.PNG" 
+    },
+    {
+      "id": 5,
+      "name": "Monstera",
+      "price": 14,
+      "image": "monstera.PNG" 
+    },
+    {
+      "id": 6,
+      "name": "Bola Boj",
+      "price": 34,
+      "image": "bolaboj.PNG" 
+    },
+    {
+      "id": 7,
+      "name": "Gerbera",
+      "price": 11,
+      "image": "gerbera.PNG" 
+    },
+    {
+      "id": 8,
+      "name": "Mix planta",
+      "price": "10",
+      "image": "mixplanta.PNG" 
+    },
+    {
+      "id": 9,
+      "name": "Phalaenopsis",
+      "price": 23,
+      "image": "phalaenopsis.PNG" 
+    },
+    {
+      "id": 10,
+      "name": "Dieffenbachia",
+      "price": 21,
+      "image": "dieffenbachia.PNG" 
+    },
+    {
+      "id": 11,
+      "name": "Tulipán",
+      "price": 22,
+      "image": "tulipan.PNG"
+
+    }
+  ]
+ 
