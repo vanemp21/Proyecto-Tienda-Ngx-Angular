@@ -1,13 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 /* Contenedor principal de productos */
 .grid-products {
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
   gap: 30px;
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
   margin-top: 60px;
 }
 /* Tarjetas individuales de plantas */

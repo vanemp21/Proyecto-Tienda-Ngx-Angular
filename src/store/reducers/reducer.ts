@@ -8,7 +8,6 @@ const _plantReducer = createReducer(
 
   on(addPlant, (state, { plant }) => {
     const existingPlant = state.find((p) => p.id === plant.id);
-
     if (existingPlant) {
       return state.map((p) =>
         p.id === plant.id ? { ...p, counter: p.counter + 1 } : p
@@ -39,9 +38,6 @@ const _plantReducer = createReducer(
     return [];
   })
 );
-
-
-
 
 export function plantReducer(
   state: PlantInterface[] | undefined,

@@ -1,8 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 body{
     margin:0;
     padding: 0;
    background-image: url('assets/images/wallpaper7.png');
  background-repeat: no-repeat;
  background-size: cover;
+}
+.cart-content, .grid-products, .footer{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
 }
