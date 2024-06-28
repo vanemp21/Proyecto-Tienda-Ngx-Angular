@@ -1,12 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-body{
-    margin:0;
-    padding: 0;
-   background-image: url('assets/images/wallpaper7.png');
- background-repeat: no-repeat;
- background-size: cover;
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("assets/images/wallpaper7.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.cart-content, .grid-products, .footer{
+.cart-content,
+.grid-products,
+.footer,.content-register {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
+}
+label{
+  font-weight: 500;
 }

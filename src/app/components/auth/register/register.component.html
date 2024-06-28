@@ -1,0 +1,108 @@
+<div class="content-register">
+  <div class="inputs-register">
+    <form action="" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+      <h3>Registro</h3>
+
+      <label>Nombre:</label>
+      <input
+        type="text"
+        name="nombre"
+        id="nombre"
+        placeholder="Escribe tu nombre"
+        formControlName="nombre"
+      />
+      <div
+        *ngIf="
+          formulario.get('nombre')?.invalid &&
+          (formulario.get('nombre')?.dirty || formulario.get('nombre')?.touched)
+        "
+      >
+        <div
+          *ngIf="formulario.get('nombre')?.errors?.['required']"
+          class="error-message"
+        >
+          El nombre es requerido.
+        </div>
+      </div>
+      <label>Correo</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Escribe tu correo"
+        formControlName="correo"
+      />
+      <div
+        *ngIf="
+          formulario.get('correo')?.invalid &&
+          (formulario.get('correo')?.dirty || formulario.get('correo')?.touched)
+        "
+      >
+        <div
+          *ngIf="formulario.get('correo')?.errors?.['required']"
+          class="error-message"
+        >
+          El correo electrónico es requerido.
+        </div>
+        <div
+          *ngIf="formulario.get('correo')?.errors?.['correo']"
+          class="error-message"
+        >
+          El correo electrónico no es válido.
+        </div>
+      </div>
+      <label>Password:</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Escribe tu contraseña"
+        formControlName="password"
+      />
+      <div
+        *ngIf="
+          formulario.get('password') !== null &&
+          formulario.get('password')?.invalid &&
+          (formulario.get('password')?.dirty ||
+            formulario.get('password')?.touched)
+        "
+      >
+        <div
+          *ngIf="formulario.get('password')?.errors?.['required']"
+          class="error-message"
+        >
+          La contraseña es requerida.
+        </div>
+      </div>
+      <label>Repite Password:</label>
+      <input
+        type="password"
+        name="password-repeat"
+        id="password-repeat"
+        placeholder="Repite tu contraseña"
+        formControlName="repetirPass"
+      />
+      <div class="error-message"
+        *ngIf="formulario.errors?.['notSame'] && formulario.get('repetirPass')?.touched"
+      >
+        Las contraseñas no coinciden.
+      </div>
+      <div class="buttons-send">
+      <div class="google-register">
+        <button class="button-google">
+          <img
+            class="img-google"
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            loading="lazy"
+            alt="google logo"
+          />
+          <span (click)="onSubmitGoogle()">&nbsp; Iniciar con Google</span>
+        </button>
+      </div>
+      <div class="button-submit"><button type="submit"  [disabled]="formulario.invalid">Enviar</button></div>
+      <div> <small> ¿Ya tienes cuenta? <a routerLink="/login">Inicia Sesión</a></small>  </div>
+  
+      </div>
+    </form>
+  </div>
+</div>

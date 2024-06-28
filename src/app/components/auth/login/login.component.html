@@ -1,0 +1,63 @@
+<div class="content-login">
+    <div class="inputs-login">
+      <form action="" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <h3>Login</h3>
+  
+        <label>Correo</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Escribe tu correo"
+          formControlName="correo"
+        />
+        <div
+        *ngIf="
+          formulario.get('correo')?.invalid &&
+          (formulario.get('correo')?.dirty ||
+          formulario.get('correo')?.touched)
+        "
+      >
+        <div
+          *ngIf="formulario.get('correo')?.errors?.['required']"
+          class="error-message"
+        >
+          El correo electrónico es requerido.
+        </div>
+        <div
+          *ngIf="formulario.get('correo')?.errors?.['correo']"
+          class="error-message"
+        >
+          El correo electrónico no es válido.
+        </div>
+        </div>
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Escribe tu contraseña"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            formulario.get('password') !== null &&
+            formulario.get('password')?.invalid &&
+            (formulario.get('password')?.dirty || formulario.get('password')?.touched)
+          "
+        >
+          <div
+            *ngIf="formulario.get('password')?.errors?.['required']"
+            class="error-message"
+          >
+            La contraseña es requerida.
+          </div>
+        </div>
+ 
+        <button type="submit"  [disabled]="formulario.invalid">Iniciar sesión</button>
+       
+      </form>
+      <div class="no-account"><small>¿No tienes cuenta?  <a routerLink="/register">Regístrate</a></small></div>
+    </div>
+  </div>
+  
