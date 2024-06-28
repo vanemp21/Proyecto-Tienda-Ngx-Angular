@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
+  isLogged = false;
   constructor(private auth: Auth, private toastr: ToastrService) {}
   //Registro
   async signUp(email: string, password: string) {
@@ -20,16 +21,9 @@ export class AuthService {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        sendEmailVerification(user)
-          .then(() => {
-            this.toastr.success(
-              `Se ha enviado un correo de verificación a ${user.email}`,
-              'Registro completado'
-            );
-          })
-          .catch(() => {
-            this.toastr.error('Error al enviar el mensaje', 'Error');
-          });
+        this.toastr.success('Te has registrado correctamente', 'Bienvenido');
+        this.isLogged = true;
+        console.log(this.isLogged);
         return user;
       })
       .catch((error) => {
@@ -56,29 +50,33 @@ export class AuthService {
         return errorCode;
       });
   }
-  signUpGoogle() {
+  async signUpGoogle(): Promise<any> {
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    auth.languageCode = 'es';
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
-        this.toastr.success(`Bienvenido ${user.email}`, 'Registro completado');
-      })
-      .catch((error) => {
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        this.toastr.error(error.message)
-      });
+    try {
+      const result = await signInWithPopup(this.auth, provider);
+      const user = result.user;
+      this.isLogged = true;
+      this.toastr.success(`Bienvenido ${user.email}`, 'Registro completado');
+      return user;
+    } catch (error) {
+      this.toastr.error('Ha ocurrido un error', 'Error');
+      throw error;
+    }
   }
+
   //Logeo
   signIn(email: string, password: string) {
+    this.isLogged = true;
     this.toastr.success(`¡Hola de nuevo  ${email} !`, 'Bienvenido');
     return signInWithEmailAndPassword(this.auth, email, password);
   }
- 
+
   //Deslogeo
   signOut() {
     return signOut(this.auth);
+  }
+
+  getLogged() {
+    return this.isLogged;
   }
 }

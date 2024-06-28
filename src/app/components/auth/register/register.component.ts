@@ -8,18 +8,22 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Register } from '../../../shared/models/register.model';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule ,RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   formulario: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.formulario = this.fb.group(
       {
         nombre: ['', [Validators.required]],
@@ -50,17 +54,19 @@ export class RegisterComponent {
           registrarUsuario.email,
           registrarUsuario.password
         );
-        console.log('User signed up:', user);
       } catch (error) {
         console.error('Error signing up:', error);
       }
     }
   }
 
-  onSubmitGoogle() {
+  async onSubmitGoogle() {
     try {
-      const user = this.authService.signUpGoogle();
-      console.log('Iniciado sesión con ' + user);
+      const user = await this.authService.signUpGoogle();
+      const logged = this.authService.getLogged();
+      if (logged) {
+        this.router.navigate(['/']);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +81,5 @@ export class RegisterComponent {
 //       console.error('Error logging out:', error);
 //     });
 // }
-
-
 
 //    this.router.navigate(['/']);

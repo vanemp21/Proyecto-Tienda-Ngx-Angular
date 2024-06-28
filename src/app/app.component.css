@@ -1,0 +1,9 @@
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr 1fr 0.1fr;
+  height: 100vh;
+}
+footer {
+  margin-top: 40px;
+}
