@@ -4,19 +4,30 @@
 
 <div class="header floating-element">
   <a routerLink="/">
-  <div class="header-components">
-    <img src="../../../assets/images/img-header.png" alt="" />
-    <h1>Plantalicious</h1>
-    <img src="../../../assets/images/img-header.png" alt="" />
-  </div>
-</a>
+    <div class="header-components">
+      <img src="../../../assets/images/img-header.png" alt="" />
+      <h1>Plantalicious</h1>
+      <img src="../../../assets/images/img-header.png" alt="" />
+    </div>
+  </a>
 </div>
 
 <div class="header-icons">
-  <div *ngIf="userLogged |async">
-    <div  class="cart-container" (mouseenter)="toggleCartVisibility()">
+  <ng-container *ngIf="userLogged | async as isLoggedIn; else notLoggedIn">
+
+    <div class="cart-container" (mouseenter)="toggleCartVisibility()">
       <i class="bi bi-cart"></i>
     </div>
-  </div>
-  <a routerLink="/login"> <i class="bi bi-person-fill"></i></a>
+    <div>
+      <i (click)="desLoggin()" class="bi bi-box-arrow-left"  ></i> 
+    </div>
+  </ng-container>
+  
+
+  <ng-template #notLoggedIn>
+    <a routerLink="/login">
+      <i class="bi bi-person-fill"></i>
+    </a>
+  </ng-template>
+  
 </div>

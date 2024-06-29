@@ -10,6 +10,7 @@ import {
   removeById,
   removePlant,
 } from '../../../store/actions/actions';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -63,11 +64,11 @@ totalByPlant: { [id: number]: number } = {};
     this.toastr.info('Has eliminado el producto al carrito correctamente', 'Producto eliminado');
 
   }
-  onPayPlants(){
+  onPayPlants():void{
     this.store.dispatch(PayCart())
     this.toastr.success('¡Productos comprados correctamente!', 'Productos Pagados');
   }
-  closeCart() {
+  closeCart():void {
     this.closeCartEvent.emit(false);
   }
 

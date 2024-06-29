@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
 import {
-  sendEmailVerification,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,21 +13,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+
  
   /*PRUEBA*/
   isLogged = new BehaviorSubject<boolean>(false)
   /**/
   constructor(private auth: Auth, private toastr: ToastrService) {}
+ 
   //Registro
   async signUp(email: string, password: string) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
+  
+    
+    createUserWithEmailAndPassword(this.auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         this.toastr.success('Te has registrado correctamente', 'Bienvenido');
         this.isLogged.next(true)
-        // this.logeado.next(true)
-        console.log(this.isLogged);
+        localStorage.setItem('isLogged', 'true');
         return user;
       })
       .catch((error) => {
@@ -61,6 +62,7 @@ export class AuthService {
       const result = await signInWithPopup(this.auth, provider);
       const user = result.user;
       this.isLogged.next(true)
+      localStorage.setItem('isLogged', 'true');
       this.toastr.success(`Bienvenido ${user.email}`, 'Registro completado');
       return user;
     } catch (error) {
@@ -71,19 +73,23 @@ export class AuthService {
   //Logeo
   signIn(email: string, password: string) {
     this.isLogged.next(true)
+    localStorage.setItem('isLogged', 'true');
     this.toastr.success(`¡Hola de nuevo  ${email} !`, 'Bienvenido');
     return signInWithEmailAndPassword(this.auth, email, password);
   }
   //Deslogeo
   signOut() {
     this.isLogged.next(false)
+    localStorage.removeItem('isLogged');
+    this.toastr.success('Has cerrado sesión','Sesión cerrada')
     return signOut(this.auth);
   }
   userLogged(){
-    console.log(this.isLogged)
-  
     return this.isLogged.value
-
   }
+  // private getInitialAuthState(): boolean {
+  //   const savedState = localStorage.getItem('isLogged');
+  //   return savedState === 'true'; // Convertir el valor guardado a booleano
+  // }
  
 }

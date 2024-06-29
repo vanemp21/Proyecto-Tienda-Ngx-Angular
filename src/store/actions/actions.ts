@@ -17,3 +17,7 @@ export const addPlant = createAction(
     props<{ id: number }>() 
   );
   export const PayCart = createAction('[Plant List] Pay Cart List')
+  export const loadCart = createAction(
+    '[Plant List] Load Cart',
+    props<{ items: any[] }>()
+  );

@@ -8,8 +8,8 @@
     <h3>{{ plant.name }}</h3>
     <p><span>Precio:</span> {{ plant.price }}€</p>
     <div>
-      <button (click)="addPlant(plant)" class="btn btn-primary">
-        Agregar Planta
+      <button (click)="addPlant(plant)" class="button" [disabled]="!(userLogged$ | async)">
+       Añadir
       </button>
     </div>
   </div>

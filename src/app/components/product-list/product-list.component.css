@@ -1,4 +1,4 @@
-/* Contenedor principal de productos */
+ 
 .grid-products {
   display: grid;
   grid-template-columns: 1fr;
@@ -6,7 +6,7 @@
   gap: 30px;
   margin-top: 60px;
 }
-/* Tarjetas individuales de plantas */
+ 
 .plant-card {
   display: flex;
   justify-content: center;
@@ -23,7 +23,6 @@
 .plant-card:hover {
   transform: scale(1.2);
 }
-/* Estilo para imágenes */
 .grid-products img {
   width: 150px;
   height: auto;
@@ -32,40 +31,46 @@
   box-shadow: 5px 5px 11px 5px rgb(167, 135, 161);
   opacity: 100%;
 }
-
-
-
-/* Estilos para botones */
+ 
 button {
-  background-color: rgb(175, 144, 166);
+  background-color: rgb(185, 124, 165);
   box-shadow: 5px 5px 11px 5px rgb(86, 86, 86);
   border-color: black;
+  padding:10px 40px;
+  border-radius: 10px;
 }
-button:active{
-  background-color: rgb(164, 111, 140) !important;
-  border:1px solid black !important;
-}
-button:hover {
-  background-color: rgb(211, 141, 191);
+ 
+button:disabled{
+  background-color: rgb(206, 150, 187);
   border-color: black;
+  cursor: not-allowed !important;
+  border-radius: 5px;
+  color:black;
 }
+ 
+button:hover {
+  background-color: rgba(179, 110, 145, 0.684);
+  border-color: black;
 
-/* Estilos para los párrafos */
+}
+ 
+
+ 
 p {
   margin-bottom: 10px;
 }
 
-/* Encabezado de las tarjetas */
+ 
 h3 {
   margin-top: 10px;
 }
 
-/* Estilos para el span dentro del párrafo */
+ 
 p span {
   font-weight: bold;
 }
 
-/* Media query para pantallas más anchas */
+ 
 @media screen and (min-width: 768px) {
   .grid-products {
     grid-template-columns: 1fr 1fr 1fr;

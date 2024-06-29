@@ -45,7 +45,7 @@ margin-top:40px;
   margin-top: 20px;
 }
 .bi-cart,
-.bi-person-fill {
+.bi-person-fill, .bi-box-arrow-left {
   font-size: 36px;
   cursor: pointer;
   color: rgb(126, 36, 85);
