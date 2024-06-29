@@ -43,3 +43,11 @@ button{
 
  margin-top:20px;
 }
+.img-google {
+  width: 10%;
+}
+.button-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Register } from '../../../shared/models/register.model';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 })
 export class LoginComponent {
   formulario: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.formulario = this.fb.group(
       {
         nombre: ['', [Validators.required]],
@@ -55,6 +55,18 @@ export class LoginComponent {
       } catch (error) {
         console.error('Error signing up:', error);
       }
+    }
+  }
+
+  async onSubmitGoogle() {
+    try {
+      const user = await this.authService.signUpGoogle();
+      const isLogged = this.authService.isLogged
+      if (isLogged) {
+        this.router.navigate(['/']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }

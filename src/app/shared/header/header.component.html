@@ -1,18 +1,22 @@
 <div class="cart-component" *ngIf="showCart">
   <app-cart (closeCartEvent)="onCloseCart($event)" />
 </div>
+
 <div class="header floating-element">
+  <a routerLink="/">
   <div class="header-components">
     <img src="../../../assets/images/img-header.png" alt="" />
     <h1>Plantalicious</h1>
     <img src="../../../assets/images/img-header.png" alt="" />
   </div>
+</a>
 </div>
+
 <div class="header-icons">
-  <div>
-    <div class="cart-container" (mouseenter)="toggleCartVisibility()">
+  <div *ngIf="userLogged |async">
+    <div  class="cart-container" (mouseenter)="toggleCartVisibility()">
       <i class="bi bi-cart"></i>
     </div>
   </div>
-  <a routerLink="/register"> <i class="bi bi-person-fill"></i></a>
+  <a routerLink="/login"> <i class="bi bi-person-fill"></i></a>
 </div>

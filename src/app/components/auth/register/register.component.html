@@ -82,26 +82,21 @@
         placeholder="Repite tu contraseña"
         formControlName="repetirPass"
       />
-      <div class="error-message"
+      <div
+        class="error-message"
         *ngIf="formulario.errors?.['notSame'] && formulario.get('repetirPass')?.touched"
       >
         Las contraseñas no coinciden.
       </div>
       <div class="buttons-send">
-      <div class="google-register">
-        <button class="button-google">
-          <img
-            class="img-google"
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            loading="lazy"
-            alt="google logo"
-          />
-          <span (click)="onSubmitGoogle()">&nbsp; Iniciar con Google</span>
-        </button>
-      </div>
-      <div class="button-submit"><button type="submit"  [disabled]="formulario.invalid">Enviar</button></div>
-      <div> <small> ¿Ya tienes cuenta? <a routerLink="/login">Inicia Sesión</a></small>  </div>
-  
+        <div class="button-submit">
+          <button type="submit" [disabled]="formulario.invalid">Enviar</button>
+        </div>
+        <div>
+          <small>
+            ¿Ya tienes cuenta? <a routerLink="/login">Inicia Sesión</a></small
+          >
+        </div>
       </div>
     </form>
   </div>

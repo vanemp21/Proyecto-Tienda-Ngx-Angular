@@ -53,7 +53,17 @@
             La contraseña es requerida.
           </div>
         </div>
- 
+        <div class="google-register">
+          <button class="button-google">
+            <img
+              class="img-google"
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              loading="lazy"
+              alt="google logo"
+            />
+            <span (click)="onSubmitGoogle()">&nbsp; Iniciar con Google</span>
+          </button>
+        </div>
         <button type="submit"  [disabled]="formulario.invalid">Iniciar sesión</button>
        
       </form>

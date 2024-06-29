@@ -60,7 +60,10 @@ margin-top:40px;
     border:1px solid rgb(166, 162, 162);
     border-radius: 5px;
  }
-
+a{
+  text-decoration: none;
+  color:black;
+}
   /* Estilo para el contenido del carrito */
  
 @keyframes float {

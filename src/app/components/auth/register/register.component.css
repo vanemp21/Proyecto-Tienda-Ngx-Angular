@@ -31,14 +31,7 @@ form {
   flex-direction: column;
   gap: 5px;
 }
-.img-google {
-  width: 10%;
-}
-.button-google {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .buttons-send {
   display: flex;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PlantInterface } from '../models/product.model';
 
 import { Store } from '@ngrx/store';
@@ -17,13 +17,16 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderComponent {
   showCart: boolean = false;
-  userLogged: boolean = false;
+
   plants$: Observable<PlantInterface[]>;
+  userLogged= new BehaviorSubject<boolean>(false);
   constructor(
     private store: Store<{ plants: PlantInterface[] }>,
     private authService: AuthService
+    
   ) {
     this.plants$ = this.store.select('plants');
+    this.isLogged()
   }
   toggleCartVisibility() {
     this.showCart = !this.showCart;
@@ -32,6 +35,6 @@ export class HeaderComponent {
     this.showCart = event;
   }
   isLogged() {
-    this.userLogged = this.authService.getLogged();
+    this.userLogged = this.authService.isLogged
   }
 }

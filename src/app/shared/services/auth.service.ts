@@ -8,12 +8,16 @@ import {
 } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isLogged = false;
+ 
+  /*PRUEBA*/
+  isLogged = new BehaviorSubject<boolean>(false)
+  /**/
   constructor(private auth: Auth, private toastr: ToastrService) {}
   //Registro
   async signUp(email: string, password: string) {
@@ -22,7 +26,8 @@ export class AuthService {
       .then(async (userCredential) => {
         const user = userCredential.user;
         this.toastr.success('Te has registrado correctamente', 'Bienvenido');
-        this.isLogged = true;
+        this.isLogged.next(true)
+        // this.logeado.next(true)
         console.log(this.isLogged);
         return user;
       })
@@ -55,7 +60,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, provider);
       const user = result.user;
-      this.isLogged = true;
+      this.isLogged.next(true)
       this.toastr.success(`Bienvenido ${user.email}`, 'Registro completado');
       return user;
     } catch (error) {
@@ -63,20 +68,22 @@ export class AuthService {
       throw error;
     }
   }
-
   //Logeo
   signIn(email: string, password: string) {
-    this.isLogged = true;
+    this.isLogged.next(true)
     this.toastr.success(`¡Hola de nuevo  ${email} !`, 'Bienvenido');
     return signInWithEmailAndPassword(this.auth, email, password);
   }
-
   //Deslogeo
   signOut() {
+    this.isLogged.next(false)
     return signOut(this.auth);
   }
+  userLogged(){
+    console.log(this.isLogged)
+  
+    return this.isLogged.value
 
-  getLogged() {
-    return this.isLogged;
   }
+ 
 }
