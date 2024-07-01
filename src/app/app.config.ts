@@ -12,6 +12,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { CartEffects } from '../store/effects/effects';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() =>
       initializeApp(environment.firebaseConfig)
     ),
+    provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
   ],
 };

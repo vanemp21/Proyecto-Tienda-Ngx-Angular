@@ -5,7 +5,6 @@ import { PayCart, addPlant, loadCart, removeById, removePlant } from '../actions
 export const initialState: PlantInterface[] = [];
 const _plantReducer = createReducer(
   initialState,
-
   on(addPlant, (state, { plant }) => {
     const existingPlant = state.find((p) => p.id === plant.id);
     if (existingPlant) {

@@ -7,29 +7,23 @@ import {
 } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
- 
-  /*PRUEBA*/
-  isLogged = new BehaviorSubject<boolean>(false)
-  /**/
+  isLogged = new BehaviorSubject<boolean>(false);
+  email = new BehaviorSubject<string>('') 
   constructor(private auth: Auth, private toastr: ToastrService) {}
- 
-  //Registro
   async signUp(email: string, password: string) {
-  
-    
     createUserWithEmailAndPassword(this.auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         this.toastr.success('Te has registrado correctamente', 'Bienvenido');
         this.isLogged.next(true)
         localStorage.setItem('isLogged', 'true');
+        this.email.next(email)
         return user;
       })
       .catch((error) => {
@@ -63,21 +57,21 @@ export class AuthService {
       const user = result.user;
       this.isLogged.next(true)
       localStorage.setItem('isLogged', 'true');
-      this.toastr.success(`Bienvenido ${user.email}`, 'Registro completado');
+      this.toastr.success(`Bienvenido ${user.email}`, 'Inicio de sesión completado');
+      this.email.next(user.email!)
       return user;
     } catch (error) {
       this.toastr.error('Ha ocurrido un error', 'Error');
       throw error;
     }
   }
-  //Logeo
   signIn(email: string, password: string) {
     this.isLogged.next(true)
     localStorage.setItem('isLogged', 'true');
+    this.email.next(email)
     this.toastr.success(`¡Hola de nuevo  ${email} !`, 'Bienvenido');
     return signInWithEmailAndPassword(this.auth, email, password);
   }
-  //Deslogeo
   signOut() {
     this.isLogged.next(false)
     localStorage.removeItem('isLogged');
@@ -87,9 +81,4 @@ export class AuthService {
   userLogged(){
     return this.isLogged.value
   }
-  // private getInitialAuthState(): boolean {
-  //   const savedState = localStorage.getItem('isLogged');
-  //   return savedState === 'true'; // Convertir el valor guardado a booleano
-  // }
- 
 }
