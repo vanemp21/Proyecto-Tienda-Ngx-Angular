@@ -10,10 +10,8 @@
   width: 350px;
   background-color: rgb(188, 143, 182);
   box-shadow: 5px 5px 11px 1px rgb(86, 86, 86);
-
   padding: 30px;
   align-items: center;
-
   border-radius: 10px;
 }
 
@@ -31,7 +29,6 @@ form {
   flex-direction: column;
   gap: 5px;
 }
-
 
 .buttons-send {
   display: flex;

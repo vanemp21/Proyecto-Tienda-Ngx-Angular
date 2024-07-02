@@ -7,7 +7,7 @@
   margin-bottom: 30px;
   font-family: "Playwrite ES Deco", cursive;
   font-optical-sizing: auto;
-margin-top:40px;
+  margin-top: 40px;
 }
 
 .header img {
@@ -27,9 +27,9 @@ margin-top:40px;
   justify-content: end;
   align-items: end;
   gap: 10px;
- position: absolute;
- top:0;
- right: 10px;
+  position: absolute;
+  top: 0;
+  right: 10px;
 }
 .floating-element {
   animation: float 4s ease-in-out infinite;
@@ -45,27 +45,27 @@ margin-top:40px;
   margin-top: 20px;
 }
 .bi-cart,
-.bi-person-fill, .bi-box-arrow-left {
+.bi-person-fill,
+.bi-box-arrow-left {
   font-size: 36px;
   cursor: pointer;
   color: rgb(126, 36, 85);
 }
- .cart-component{
-    background-color: rgb(238, 212, 228);
-    width: 270px;
-    position: absolute;
-    top:20px;
-    right:90px;
-    z-index: 999;
-    border:1px solid rgb(166, 162, 162);
-    border-radius: 5px;
- }
-a{
-  text-decoration: none;
-  color:black;
+.cart-component {
+  background-color: rgb(238, 212, 228);
+  width: 270px;
+  position: absolute;
+  top: 20px;
+  right: 90px;
+  z-index: 999;
+  border: 1px solid rgb(166, 162, 162);
+  border-radius: 5px;
 }
-  /* Estilo para el contenido del carrito */
- 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 @keyframes float {
   0% {
     transform: translateY(0);
@@ -77,8 +77,8 @@ a{
     transform: translateY(0);
   }
 }
-@media screen and (min-width:768px) {
-  .cart-component{
+@media screen and (min-width: 768px) {
+  .cart-component {
     width: 300px;
   }
 }

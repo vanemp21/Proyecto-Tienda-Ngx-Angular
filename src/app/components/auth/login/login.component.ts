@@ -1,72 +1,66 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
-import { Register } from '../../../shared/models/register.model';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   formulario: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
-    this.formulario = this.fb.group(
-      {
-        nombre: ['', [Validators.required]],
-        correo: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        repetirPass: ['', [Validators.required]],
-      },
-      { validator: this.checkPasswords }
-    );
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.formulario = this.fb.group({
+      correo: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
-  checkPasswords(group: FormGroup) {
-    const pass = group.get('password')!.value;
-    const confirmPass = group.get('repetirPass')!.value;
-    return pass === confirmPass ? null : { notSame: true };
+  ngOnInit(): void {
+    // Al inicializar el componente, intenta recuperar los datos del formulario desde localStorage
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail) {
+      this.formulario.patchValue({ correo: savedEmail });
+    }
   }
 
   async onSubmit() {
-    const registrarUsuario: Register = {
-      name: this.formulario.value.nombre,
-      email: this.formulario.value.correo,
-      password: this.formulario.value.password,
-    };
     if (this.formulario.valid) {
-      console.log(name, registrarUsuario.email, registrarUsuario.password);
+      const email = this.formulario.value.correo;
+      const password = this.formulario.value.password;
+      
+      // Guardar el email en localStorage para mantenerlo después de actualizar la página
+      localStorage.setItem('savedEmail', email);
+
       try {
-        const user = await this.authService.signUp(
-          registrarUsuario.email,
-          registrarUsuario.password
-        );
-        console.log('User signed up:', user);
+        const user = await this.authService.signIn(email, password);
+        this.router.navigate(['/']);  
       } catch (error) {
-        console.error('Error signing up:', error);
+        console.error('Error signing in:', error);
       }
+    } else {
+      console.log('Formulario inválido');
     }
   }
 
   async onSubmitGoogle() {
     try {
-      const user = await this.authService.signUpGoogle();
-      const isLogged = this.authService.isLogged
+      await this.authService.signUpGoogle();
+      const isLogged = this.authService.isLogged.getValue(); 
       if (isLogged) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/']);  
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error signing in with Google:', error);
     }
   }
 }
-
-//    this.router.navigate(['/']);

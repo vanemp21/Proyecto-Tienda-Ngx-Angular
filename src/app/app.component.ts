@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+
 
 @Component({
   selector: 'app-root',
@@ -12,5 +13,5 @@ import { HomeComponent } from './components/home/home.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'ngx-project';
+
 }

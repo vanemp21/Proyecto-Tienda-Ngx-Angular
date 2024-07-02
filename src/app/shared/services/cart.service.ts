@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Firestore, deleteDoc, getDoc, setDoc } from '@angular/fire/firestore';
-import {
-  doc,
-  where,
-  getDocs,
-  collection,
-  query,
-  updateDoc,
-} from 'firebase/firestore';
-import { BehaviorSubject, Observable, switchMap, take } from 'rxjs';
-import { AuthService } from './auth.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PlantInterface } from '../models/product.model';
+import { loadCart } from '../../../store/actions/actions';
+import { AuthService } from './auth.service';
+import { selectAllPlants } from '../../../store/selectors/selector';
 
 @Injectable({
   providedIn: 'root',
@@ -20,112 +13,98 @@ export class CartService {
   email$!: Observable<string>;
   email: string = '';
   plantCounterSubject = new BehaviorSubject<{ [plantId: string]: number }>({});
-  plants$: Observable<PlantInterface[]>;
-  plantCounters$: Observable<{ [plantId: string]: number }>;
+  plants$!: Observable<PlantInterface[]>;
 
-  constructor(
-    private firestore: Firestore,
-    private authService: AuthService,
-    private store: Store<{ plants: PlantInterface[] }>
-  ) {
-    this.plantCounters$ = this.plantCounter$;
-    this.plantCounters$.subscribe((counters) => {});
-    this.plants$ = this.store.select('plants');
+  private cartItemsSubject = new BehaviorSubject<PlantInterface[]>([]);
+  cartItems$: Observable<PlantInterface[]> =
+    this.cartItemsSubject.asObservable();
+
+  constructor(private store: Store, private authService: AuthService) {
     this.checkEmail();
+    this.loadStateFromLocalStorage();
+    this.syncStoreWithLocalStorage();
   }
-  getDataCart() {}
+
   checkEmail() {
     this.email$ = this.authService.email.asObservable();
     this.email$.subscribe((email) => {
       this.email = email;
     });
   }
-  async addDataCart2() {
-    this.plants$.subscribe(async (elemento) => {
-      if (elemento && elemento.length > 0) {
-        const planta = elemento;
-        const cartData = collection(this.firestore, 'cartlist');
-        const q = query(cartData, where('email', '==', this.email));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot) {
-          const docRef = doc(this.firestore, `cartlist/${this.email}`);
-          await setDoc(docRef, { planta }, { merge: true });
-        }
-      } else {
-        await this.removePlantCart();
-      }
-    });
+
+  addToCart(plant: PlantInterface) {
+    let currentCartItems = this.cartItemsSubject.getValue();
+    const existingIndex = currentCartItems.findIndex((p) => p.id === plant.id);
+    if (existingIndex !== -1) {
+      currentCartItems[existingIndex].counter++;
+    } else {
+      currentCartItems.push({ ...plant, counter: 1 });
+    }
+    this.cartItemsSubject.next(currentCartItems);
+    this.updateLocalStorage(currentCartItems);
   }
 
-  get plantCounter$(): Observable<{ [plantId: string]: number }> {
-    return this.plantCounterSubject.asObservable();
+  removeFromCart(id: number) {
+    let currentCartItems = this.cartItemsSubject.getValue();
+    const itemToRemove = currentCartItems.find((p) => p.id === id);
+    if (itemToRemove) {
+      if (itemToRemove.counter > 1) {
+        itemToRemove.counter--;
+      } else {
+        currentCartItems = currentCartItems.filter((p) => p.id !== id);
+      }
+      this.cartItemsSubject.next(currentCartItems);
+      this.updateLocalStorage(currentCartItems);
+    }
+  }
+
+  clearCart() {
+    this.cartItemsSubject.next([]);
+    localStorage.removeItem('cartItems');
+  }
+
+  private updateLocalStorage(cartItems: PlantInterface[]) {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }
+
+  getCartItemsFromLocalStorage(): PlantInterface[] {
+    const storedCartItems = localStorage.getItem('cartItems');
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  }
+
+  loadStateFromLocalStorage() {
+    const cartItems = this.getCartItemsFromLocalStorage();
+    if (cartItems.length > 0) {
+      this.store.dispatch(loadCart({ items: cartItems }));
+    }
+  }
+
+  syncStoreWithLocalStorage() {
+    this.store.select(selectAllPlants).subscribe((plants) => {
+      this.updateLocalStorage(plants);
+    });
   }
 
   async updatePlantCounter(plant: PlantInterface) {
-    const cartData = collection(this.firestore, 'cartlist');
-    const q = query(
-      cartData,
-      where('email', '==', this.email),
-      where('plant.id', '==', plant.id)
-    );
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      querySnapshot.forEach(async (document) => {
-        const docRef = doc(this.firestore, `cartlist/${document.id}`);
-        if (plant.counter === 0) {
-          await this.removePlantCart();
-        } else {
-          await updateDoc(docRef, {
-            'plant.counter': plant.counter,
-          });
-        }
-      });
-    }
-  }
-
-  async addDataCart() {
-    this.plants$.subscribe(async (elemento) => {
-      if (elemento && elemento.length > 0) {
-        const planta = elemento;
-        const docRef = doc(this.firestore, `cartlist/${this.email}`);
-        const docSnapshot = await getDoc(docRef);
-        if (docSnapshot.exists()) {
-          await setDoc(docRef, { planta }, { merge: true });
-        } else {
-          await setDoc(docRef, { email: this.email, planta });
-        }
+    let currentCartItems = this.getCartItemsFromLocalStorage();
+    const existingIndex = currentCartItems.findIndex((p) => p.id === plant.id);
+    if (existingIndex !== -1) {
+      if (plant.counter === 0) {
+        currentCartItems = currentCartItems.filter((p) => p.id !== plant.id);
       } else {
-        await this.removePlantCart();
+        currentCartItems[existingIndex].counter = plant.counter;
       }
-    });
-  }
-  async removePlantCart() {
-    const docRef = doc(this.firestore, `cartlist/${this.email}`);
-    const docSnapshot = await getDoc(docRef);
-    if (docSnapshot.exists()) {
-      await deleteDoc(docRef);
+      this.cartItemsSubject.next(currentCartItems);
+      this.updateLocalStorage(currentCartItems);
     }
   }
 
-  async getDocData() {
-    const docRef = doc(this.firestore, 'cartlist', this.email);
-    try {
-      const doc = await getDoc(docRef);
-      if (doc.exists()) {
-        console.log(doc.data());
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
   async payDataCart(email: string) {
-    const docRef = doc(this.firestore, `cartlist/${email}`);
-    const docSnapshot = await getDoc(docRef);
-    if (docSnapshot.exists()) {
-      await deleteDoc(docRef);
-      console.log(`El carrito de ${email} ha sido vaciado.`);
-    } else {
-      console.log(`No se encontró un carrito para ${email}.`);
-    }
+    this.clearCart();
+  }
+
+  async getDocData(): Promise<PlantInterface[] | undefined> {
+    const storedCartItems = this.getCartItemsFromLocalStorage();
+    return storedCartItems.length > 0 ? storedCartItems : undefined;
   }
 }

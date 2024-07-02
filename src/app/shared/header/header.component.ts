@@ -18,16 +18,15 @@ import { AuthService } from '../services/auth.service';
 export class HeaderComponent {
   showCart: boolean = false;
   plants$: Observable<PlantInterface[]>;
-  userLogged= new BehaviorSubject<boolean>(false);
+  userLogged = new BehaviorSubject<boolean>(false);
 
   constructor(
     private store: Store<{ plants: PlantInterface[] }>,
     private authService: AuthService,
-    private router:Router
-    
+    private router: Router
   ) {
     this.plants$ = this.store.select('plants');
-    this.isLogged()
+    this.isLogged();
   }
   toggleCartVisibility() {
     this.showCart = !this.showCart;
@@ -36,10 +35,12 @@ export class HeaderComponent {
     this.showCart = event;
   }
   isLogged() {
-    this.userLogged = this.authService.isLogged
+    this.userLogged = this.authService.isLogged;
   }
-  desLoggin(){
-    this.authService.signOut()
-    this.router.navigate(['/'])
+  desLoggin() {
+    this.authService.signOut();
+    this.showCart=false;
+    this.router.navigate(['/']);
+
   }
 }

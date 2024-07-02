@@ -4,11 +4,14 @@
   <div *ngFor="let item of plants$ | async" class="cart-items">
     <div class="first-line-item">
       <div class="name-price-item">
-    <div class="item-name"> {{ item.name }} </div> <div class="item-price"> {{ totalByPlant[item.id] }}€</div>
-  </div>
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-price">{{ totalByPlant[item.id] }}€</div>
+      </div>
       <div class="button-counter">
-        <button class="decrement-item" (click)="onRemovePlant(item.id)">-</button><span>{{ item.counter }}</span>
-        <button class="increment-item" (click)="onAddPlant(item)" >+</button>
+        <button class="decrement-item" (click)="onRemovePlant(item.id)">
+          -</button
+        ><span>{{ item.counter }}</span>
+        <button class="increment-item" (click)="onAddPlant(item)">+</button>
       </div>
     </div>
     <div class="remove-all">
@@ -18,7 +21,10 @@
     </div>
   </div>
   <div class="cart-empty" *ngIf="!total">Tu carrito está vacío</div>
-  <div class="cart-no-empty" *ngIf="total"><span class="total-item">Total a pagar:</span> {{ total }}€</div>
-  <button class="btn btn-primary pay-button" (click)="onPayPlants()">Pagar</button>
- 
+  <div class="cart-no-empty" *ngIf="total">
+    <span class="total-item">Total a pagar:</span> {{ total }}€
+  </div>
+  <button class="btn btn-primary pay-button" (click)="onPayPlants()">
+    Pagar
+  </button>
 </div>

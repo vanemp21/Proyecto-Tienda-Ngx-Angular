@@ -3,12 +3,11 @@
   height: 60vh;
   justify-content: center;
   align-items: center;
-  
 }
-form{
-    display: flex;
-    flex-direction: column;
-    gap:10px;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .inputs-login {
   display: flex;
@@ -16,10 +15,8 @@ form{
   width: 300px;
   background-color: rgb(188, 143, 182);
   box-shadow: 5px 5px 11px 1px rgb(86, 86, 86);
-
   padding: 30px;
   align-items: center;
-
   border-radius: 10px;
 }
 .inputs-login h5 {
@@ -34,14 +31,13 @@ input {
 .error-message {
   color: rgb(159, 20, 20);
 }
-button{
-    margin-top:10px;
-    border-radius: 10px;
-    padding:5px 30px;
+button {
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px 30px;
 }
-.no-account{
-
- margin-top:20px;
+.no-account {
+  margin-top: 20px;
 }
 .img-google {
   width: 10%;

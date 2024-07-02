@@ -9,7 +9,6 @@ import {
 import { AuthService } from '../../../shared/services/auth.service';
 import { Register } from '../../../shared/models/register.model';
 import { Router, RouterLink } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +19,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class RegisterComponent {
   formulario: FormGroup;
-  // isLogged = new BehaviorSubject<boolean>(false)
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -61,17 +59,4 @@ export class RegisterComponent {
       }
     }
   }
-
-
 }
-// onLogout() {
-//   this.authService.signOut()
-//     .then(() => {
-//       console.log('User logged out');
-//     })
-//     .catch(error => {
-//       console.error('Error logging out:', error);
-//     });
-// }
-
-//    this.router.navigate(['/']);

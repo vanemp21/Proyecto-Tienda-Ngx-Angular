@@ -1,15 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PlantInterface } from '../../shared/models/product.model';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import {
-  addPlant,
-  PayCart,
-  removeById,
-  removePlant,
-} from '../../../store/actions/actions';
+import { addPlant, PayCart, removeById, removePlant } from '../../../store/actions/actions';
 import { CartService } from '../../shared/services/cart.service';
 
 @Component({
@@ -17,28 +12,28 @@ import { CartService } from '../../shared/services/cart.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css',
+  styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit {
   @Output() closeCartEvent = new EventEmitter<boolean>();
   totalByPlant: { [id: number]: number } = {};
   plants$: Observable<PlantInterface[]>;
   total: number = 0;
-  counterSubject = new BehaviorSubject<number>(0);
-  counter: any;
-  plantCounters$: Observable<{ [plantId: string]: number }>;
 
   constructor(
     private store: Store<{ plants: PlantInterface[] }>,
     private toastr: ToastrService,
-    private cartService:CartService
+    private cartService: CartService
   ) {
     this.plants$ = this.store.select('plants');
+  }
+
+  ngOnInit() {
+    this.cartService.loadStateFromLocalStorage();
     this.calculateTotal();
     this.calculateByIndex();
-    this.plantCounters$ = this.cartService.plantCounter$;
-
   }
+
   calculateByIndex() {
     this.plants$.subscribe((plants) => {
       this.totalByPlant = {};
@@ -59,35 +54,34 @@ export class CartComponent implements OnInit{
       }, 0);
     });
   }
+
   onAddPlant(plant: PlantInterface) {
-    this.store.dispatch(addPlant({ plant })); 
+    this.store.dispatch(addPlant({ plant }));
     this.cartService.updatePlantCounter(plant);
   }
+
   onRemovePlant(id: number) {
     this.store.dispatch(removePlant({ id }));
   }
+
   onRemoveById(id: number) {
     this.store.dispatch(removeById({ id }));
     this.toastr.info(
-      'Has eliminado el producto al carrito correctamente',
+      'Has eliminado el producto del carrito correctamente',
       'Producto eliminado'
     );
   }
+
   onPayPlants() {
     this.store.dispatch(PayCart());
     this.toastr.success(
       '¡Productos comprados correctamente!',
       'Productos Pagados'
     );
-    this.cartService.payDataCart(this.cartService.email)
-  }
-  closeCart(): void {
-    this.closeCartEvent.emit(false);
+    this.cartService.payDataCart(this.cartService.email);
   }
 
-  ngOnInit(): void {
-    this.plantCounters$.subscribe(counters => {
-      this.counter = counters
-    });
+  closeCart(): void {
+    this.closeCartEvent.emit(false);
   }
 }

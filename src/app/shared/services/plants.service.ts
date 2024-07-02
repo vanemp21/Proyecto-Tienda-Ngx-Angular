@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { PlantInterface } from '../models/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlantsService {
   private jsonUrl = 'assets/data.json';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getPlants(): Observable<PlantInterface[]> {
     return this.http.get<PlantInterface[]>(this.jsonUrl);
   }

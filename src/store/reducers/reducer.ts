@@ -37,10 +37,7 @@ const _plantReducer = createReducer(
     return [];
   }),
 
-  on(loadCart, (state, { items }) => ({
-    ...state,
-    items: [...items]
-  }))
+  on(loadCart, (state, { items }) => items)
 );
 
 export function plantReducer(

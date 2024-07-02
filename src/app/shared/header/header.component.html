@@ -14,20 +14,17 @@
 
 <div class="header-icons">
   <ng-container *ngIf="userLogged | async as isLoggedIn; else notLoggedIn">
-
     <div class="cart-container" (mouseenter)="toggleCartVisibility()">
       <i class="bi bi-cart"></i>
     </div>
     <div>
-      <i (click)="desLoggin()" class="bi bi-box-arrow-left"  ></i> 
+      <i (click)="desLoggin()" class="bi bi-box-arrow-left"></i>
     </div>
   </ng-container>
-  
 
   <ng-template #notLoggedIn>
     <a routerLink="/login">
       <i class="bi bi-person-fill"></i>
     </a>
   </ng-template>
-  
 </div>

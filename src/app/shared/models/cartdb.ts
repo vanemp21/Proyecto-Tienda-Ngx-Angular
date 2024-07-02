@@ -1,6 +1,6 @@
-import { PlantInterface } from "./product.model"
+import { PlantInterface } from './product.model';
 
 export interface Cartdb {
-    email:string
-    plant:PlantInterface
+  email: string;
+  plant: PlantInterface;
 }
